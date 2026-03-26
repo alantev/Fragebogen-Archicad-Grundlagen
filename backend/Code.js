@@ -54,7 +54,11 @@ function doGet(e) {
 function doPost(e) {
   try {
     var sheet = getSheet();
-    var data  = JSON.parse(e.postData.contents);
+    var raw   = e.postData.contents;
+    // support both JSON body and form-encoded "payload=..."
+    var data  = (e.postData.type === 'application/x-www-form-urlencoded')
+                ? JSON.parse(decodeURIComponent(raw.replace(/^payload=/, '')))
+                : JSON.parse(raw);
 
     var name        = data.respondent_name  || '';
     var email       = data.respondent_email || '';

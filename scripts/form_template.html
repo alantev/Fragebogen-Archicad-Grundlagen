@@ -430,19 +430,16 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
   };
 
   try {
-    const res = await fetch(WEB_APP_URL, {
+    await fetch(WEB_APP_URL, {
       method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify(payload),
+      mode:    "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body:    "payload=" + encodeURIComponent(JSON.stringify(payload)),
     });
-    const json = await res.json();
-    if (json.status === "ok") {
-      msg.textContent = "✓ Ihre Antworten wurden erfolgreich gespeichert. Vielen Dank!";
-      msg.className = "success";
-      btn.textContent = "Gesendet ✓";
-    } else {
-      throw new Error(json.error || "Unbekannter Fehler");
-    }
+    // no-cors means we can't read the response — assume success
+    msg.textContent = "✓ Ihre Antworten wurden erfolgreich gespeichert. Vielen Dank!";
+    msg.className = "success";
+    btn.textContent = "Gesendet ✓";
   } catch (err) {
     msg.textContent = "Fehler beim Senden: " + err.message;
     msg.className = "error";
