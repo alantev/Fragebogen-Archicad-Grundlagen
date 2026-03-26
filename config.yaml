@@ -1,0 +1,48 @@
+form:
+  title: "Fragebogen Archicad Grundlagen"
+  language: "de"
+
+backend:
+  script_id: ""        # filled automatically by clasp
+  sheet_id: "19TXZmPcFyCLwyVIAEnJqHMhaF542UYf-8VdqsVxyXAI" # Google Sheet ID for responses
+  web_app_url: ""      # filled after first deploy
+
+respondents:
+  - name: Nikolai Alantev
+    email: n.alantev@k2o-architekten.de
+  - name: Michael Brützel
+    email: m.bruetzel@k2o-architekten.de
+  - name: Lars Gronewold
+    email: l.gronewold@k2o-architekten.de
+  - name: Neele Hasselbring
+    email: n.hasselbring@k2o-architekten.de
+  - name: Kevin Karl
+    email: k.karl@k2o-architekten.de
+  - name: Jennifer Krichel
+    email: j.krichel@k2o-architekten.de
+  - name: Cerstin Lettner-Korschildgen
+    email: c.lettner@k2o-architekten.de
+  - name: Hanna Corral Lopez
+    email: h.corrallopez@k2o-architekten.de
+  - name: Ioana-Angela Man
+    email: i.man@k2o-architekten.de
+  - name: Magdalena Mandic
+    email: m.madic@k2o-architekten.de
+  - name: Olivia Melchior
+    email: o.melchior@k2o-architekten.de
+  - name: Manfred Mirbach
+    email: m.mirbach@k2o-architekten.de
+  - name: Thorsten Nolte
+    email: t.nolte@k2o-architekten.de
+  - name: Dominik Oberthür
+    email: d.oberthuer@k2o-architekten.de
+  - name: Lea Rickert
+    email: l.rickert@k2o-architekten.de
+  - name: Jens Rottland
+    email: j.rottland@k2o-architekten.de
+  - name: Paulo Lopes Vaz
+    email: p.lopezvaz@k2o-architekten.de
+  - name: Caroline Wend
+    email: c.wend@k2o-architekten.de
+  - name: Daniela Winkel
+    email: d.winkel@k2o-architekten.de

@@ -1,0 +1,10 @@
+docs/
+source/
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.clasp.json
+
+# Not needed for GitHub Pages deployment
+Mitarbeiter.txt
