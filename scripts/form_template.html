@@ -278,6 +278,25 @@ const RATINGS = [
 let currentRespondent = null;
 const answers = {};   // key: "groupId_itemIndex" → rating value
 
+// ── Persistence (localStorage) ───────────────────────────────────────────────
+function storageKey(email) { return "fragebogen_" + email; }
+
+function saveState() {
+  if (!currentRespondent) return;
+  localStorage.setItem(storageKey(currentRespondent.email), JSON.stringify(answers));
+}
+
+function loadState(email) {
+  try {
+    const raw = localStorage.getItem(storageKey(email));
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+
+function clearState(email) {
+  localStorage.removeItem(storageKey(email));
+}
+
 // ── Login ─────────────────────────────────────────────────────────────────────
 const respondentSelect = document.getElementById("respondent-select");
 const startBtn         = document.getElementById("start-btn");
@@ -286,6 +305,10 @@ RESPONDENTS.forEach(r => {
   const opt = document.createElement("option");
   opt.value = r.email;
   opt.textContent = r.name;
+  // show saved progress indicator
+  const saved = loadState(r.email);
+  const count = Object.keys(saved).length;
+  if (count > 0) opt.textContent += ` (${count} gespeichert)`;
   respondentSelect.appendChild(opt);
 });
 
@@ -296,6 +319,9 @@ respondentSelect.addEventListener("change", () => {
 startBtn.addEventListener("click", () => {
   const email = respondentSelect.value;
   currentRespondent = RESPONDENTS.find(r => r.email === email);
+  // restore saved answers
+  const saved = loadState(email);
+  Object.assign(answers, saved);
   document.getElementById("login-screen").style.display = "none";
   document.getElementById("form-screen").style.display  = "block";
   document.getElementById("submit-bar").style.display   = "flex";
@@ -368,10 +394,17 @@ function renderForm() {
           </label>`;
       });
 
+      // restore saved value
+      if (answers[key] !== undefined) {
+        const saved = right.querySelector(`input[value="${answers[key]}"]`);
+        if (saved) saved.checked = true;
+      }
+
       // listen for changes
       right.querySelectorAll("input[type=radio]").forEach(input => {
         input.addEventListener("change", () => {
           answers[key] = input.value;
+          saveState();
           updateProgress();
         });
       });
@@ -410,17 +443,21 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
   msg.className = "";
   msg.style.display = "none";
 
-  // build structured answers
-  const structured = QUESTIONS.map(group => ({
-    id:       group.id,
-    category: group.category,
-    L1:       group.L1,
-    L3:       group.L3,
-    items:    group.items.map((item, idx) => ({
-      label:  item.label,
-      rating: answers[`${group.id}_${idx}`] ?? null,
-    })),
-  }));
+  // build structured answers — only include items that were actually rated
+  const structured = QUESTIONS
+    .map(group => ({
+      id:       group.id,
+      category: group.category,
+      L1:       group.L1,
+      L3:       group.L3,
+      items:    group.items
+        .map((item, idx) => ({
+          label:  item.label,
+          rating: answers[`${group.id}_${idx}`] ?? null,
+        }))
+        .filter(item => item.rating !== null),
+    }))
+    .filter(group => group.items.length > 0);
 
   const payload = {
     respondent_name:  currentRespondent.name,
@@ -437,6 +474,7 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
       body:    "payload=" + encodeURIComponent(JSON.stringify(payload)),
     });
     // no-cors means we can't read the response — assume success
+    clearState(currentRespondent.email);
     msg.textContent = "✓ Ihre Antworten wurden erfolgreich gespeichert. Vielen Dank!";
     msg.className = "success";
     btn.textContent = "Gesendet ✓";
