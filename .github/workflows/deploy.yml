@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "source/**"
       - "scripts/**"
       - "config.yaml"
 
