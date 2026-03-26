@@ -5,7 +5,7 @@ form:
 backend:
   script_id: ""        # filled automatically by clasp
   sheet_id: "19TXZmPcFyCLwyVIAEnJqHMhaF542UYf-8VdqsVxyXAI" # Google Sheet ID for responses
-  web_app_url: ""      # filled after first deploy
+  web_app_url: "https://script.google.com/macros/s/AKfycbxisrkSDMY34ssB5MSzCn7GnosiB1KqAwaNP3-0WrzH0bl4K-4qzGLLtjKPHRuyEMZt/exec"      # filled after first deploy
 
 respondents:
   - name: Nikolai Alantev
