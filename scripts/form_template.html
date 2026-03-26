@@ -474,10 +474,18 @@ document.getElementById("submit-btn").addEventListener("click", async () => {
       body:    "payload=" + encodeURIComponent(JSON.stringify(payload)),
     });
     // no-cors means we can't read the response — assume success
-    clearState(currentRespondent.email);
-    msg.textContent = "✓ Ihre Antworten wurden erfolgreich gespeichert. Vielen Dank!";
+    // only clear saved state if all items were answered
+    const total    = totalItems();
+    const answered = Object.keys(answers).length;
+    if (answered >= total) {
+      clearState(currentRespondent.email);
+      msg.textContent = "✓ Alle Antworten wurden erfolgreich gespeichert. Vielen Dank!";
+    } else {
+      msg.textContent = `✓ ${answered} von ${total} Antworten gespeichert. Sie können den Rest später ergänzen.`;
+    }
     msg.className = "success";
     btn.textContent = "Gesendet ✓";
+    btn.disabled = false;
   } catch (err) {
     msg.textContent = "Fehler beim Senden: " + err.message;
     msg.className = "error";
