@@ -361,11 +361,12 @@ function renderForm() {
 
     // header
     card.innerHTML = `
+    ${group.L1 ? `<div class="q-group-l1">${escHtml(group.L1)}</div>` : ''}
       <div class="q-group-header">
         <span class="q-group-id">${group.id}</span>
         <span class="q-group-title">${escHtml(group.L3 || group.category)}</span>
       </div>
-      ${group.L1 ? `<div class="q-group-l1">${escHtml(group.L1)}</div>` : ''}`;
+      `;
 
     let lastSection = null;
     group.items.forEach((item, idx) => {
