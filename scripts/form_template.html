@@ -118,7 +118,14 @@
       letter-spacing: .05em;
     }
     .q-group-title { font-size: 1.05rem; font-weight: 600; }
-    .q-group-sub   { font-size: .85rem; color: #888; }
+    .q-group-l1 {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #4fc3f7;
+      margin-bottom: 1rem;
+    }
 
     /* ── Section heading inside group ── */
     .q-section-heading {
@@ -353,13 +360,12 @@ function renderForm() {
     card.className = "q-group";
 
     // header
-    const subtitle = [group.L1, group.L3].filter(Boolean).join(" › ");
     card.innerHTML = `
       <div class="q-group-header">
         <span class="q-group-id">${group.id}</span>
-        <span class="q-group-title">${group.category}</span>
-        ${subtitle ? `<span class="q-group-sub">${subtitle}</span>` : ""}
-      </div>`;
+        <span class="q-group-title">${escHtml(group.L3 || group.category)}</span>
+      </div>
+      ${group.L1 ? `<div class="q-group-l1">${escHtml(group.L1)}</div>` : ''}`;
 
     let lastSection = null;
     group.items.forEach((item, idx) => {
