@@ -26,6 +26,7 @@ DOCS_DIR = ROOT / "docs"
 IMAGES_OUT = DOCS_DIR / "images"
 CONFIG_FILE = ROOT / "config.yaml"
 TEMPLATE_FILE = ROOT / "scripts" / "form_template.html"
+DESCRIPTION_FILE = SOURCE_DIR / "Beschreibung.md"
 OUTPUT_FILE = DOCS_DIR / "index.html"
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -120,10 +121,13 @@ def build():
     web_app_url = config.get("backend", {}).get("web_app_url", "")
     form_title = config.get("form", {}).get("title", "Fragebogen")
 
+    description = DESCRIPTION_FILE.read_text(encoding="utf-8").strip() if DESCRIPTION_FILE.exists() else ""
+
     template = TEMPLATE_FILE.read_text(encoding="utf-8")
 
     html = template.replace("__FORM_TITLE__", form_title)
     html = html.replace("__WEB_APP_URL__", web_app_url)
+    html = html.replace("__DESCRIPTION__", description)
     html = html.replace("__QUESTIONS_JSON__", json.dumps(questions, ensure_ascii=False, indent=2))
     html = html.replace("__RESPONDENTS_JSON__", json.dumps(respondents, ensure_ascii=False, indent=2))
 

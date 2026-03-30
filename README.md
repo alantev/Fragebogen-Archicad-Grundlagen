@@ -34,10 +34,11 @@ Each `.md` file has YAML frontmatter (`L0`, `L1`, `L3` = topic hierarchy levels)
 ### 2. Build Script (`scripts/build_form.py`)
 
 A Python script that:
+- Reads `source/Beschreibung.md` and injects its text as a description banner at the top of the form
 - Reads all `.md` question files
 - Parses frontmatter and checklist items
 - Copies images from `_links/` folders to `docs/images/`
-- Injects questions + respondent list into `form_template.html`
+- Injects description, questions, and respondent list into `form_template.html`
 - Outputs a **single self-contained HTML file** → `docs/index.html`
 
 Run with:

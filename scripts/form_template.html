@@ -79,6 +79,19 @@
     button:hover { background: #2d2d4e; }
     button:disabled { background: #aaa; cursor: not-allowed; }
 
+    /* ── Description banner ── */
+    #form-description {
+      background: #fff;
+      border-left: 4px solid #4fc3f7;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: .95rem;
+      color: #444;
+      line-height: 1.5;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
     /* ── Question group card ── */
     .q-group {
       background: #fff;
@@ -244,6 +257,7 @@
 
 <!-- Form (hidden until login) -->
 <main id="form-screen" style="display:none">
+  <p id="form-description">__DESCRIPTION__</p>
   <div id="questions-container"></div>
   <div id="status-msg"></div>
 </main>
@@ -262,6 +276,7 @@
 
 <script>
 // ── Data injected by build script ────────────────────────────────────────────
+const DESCRIPTION = "__DESCRIPTION__";
 const QUESTIONS   = __QUESTIONS_JSON__;
 const RESPONDENTS = __RESPONDENTS_JSON__;
 const WEB_APP_URL = "__WEB_APP_URL__";
